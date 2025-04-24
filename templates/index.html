@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with GPT</title>
+</head>
+<body>
+    <h1>Chat with GPT</h1>
+    <form id="chat-form">
+        <input type="text" id="message" placeholder="輸入訊息..." required>
+        <button type="submit">送出</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        const form = document.getElementById("chat-form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const message = document.getElementById("message").value;
+
+            const res = await fetch("/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message })
+            });
+            const data = await res.json();
+            document.getElementById("response").innerText = data.reply;
+        });
+    </script>
+</body>
+</html>
